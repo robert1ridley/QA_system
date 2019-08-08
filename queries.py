@@ -278,7 +278,7 @@ class Queries:
 if __name__ == '__main__':
     templates = Queries()
     # templates.loyalty("丁斐", None)
-    # templates.birthplace(None, "豫州沛国")
+    templates.birthplace("丁仪", None)
     # templates.lifespan("丁仪")
     # templates.gender("丁仪", None)
     # templates.about_character("丁仪")
