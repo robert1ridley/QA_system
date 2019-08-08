@@ -22,7 +22,7 @@ class QuestionParser:
 if __name__ == '__main__':
     question_parser = QuestionParser()
     question_parser.read_keywords()
-    sentence = "一意孤行袁术篡逆称帝涉及多少人物？"
+    sentence = "东汉是男的还是女的？"
     question_parser.find_keywords_in_text(sentence)
     words = pseg.cut(sentence)
     # for word, flag in words:

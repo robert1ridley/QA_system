@@ -5,6 +5,7 @@ class Keywords:
         self.g = rdflib.Graph()
         self.g.load("three_kingdoms.rdf", format="turtle")
         self.place_list = []
+        self.loyalty_list = []
         self.event_list = []
         self.chapter_list = []
         self.time_list = []
@@ -44,6 +45,21 @@ class Keywords:
             if m_bplace not in self.place_list:
                 self.words.append(m_bplace + "\tPLACE")
                 self.place_list.append(m_bplace)
+
+    def belonging(self):
+        qres = self.g.query(
+            """SELECT DISTINCT ?loyalty
+            WHERE {
+                ?person foaf:loyal_to ?loyalty .
+            }""")
+
+        for row in qres:
+            loyalty = str(row[0])
+
+            if loyalty not in self.loyalty_list:
+                self.words.append(loyalty + "\tLOYALTY")
+                self.loyalty_list.append(loyalty)
+
 
     def gender(self):
         self.words.append("男\tGENDER")
@@ -111,12 +127,11 @@ class Keywords:
                 self.time_list.append(time)
 
 
-
-
 if __name__ == '__main__':
     keywords = Keywords()
     keywords.character_names()
     keywords.birthplace_names()
+    keywords.belonging()
     keywords.gender()
     keywords.fictional()
     keywords.events()
