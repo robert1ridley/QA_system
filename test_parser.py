@@ -6,7 +6,7 @@ class QuestionParser:
 
 
     def read_keywords(self):
-        with open("keywords.txt", "r") as keywords:
+        with open("data/keywords.txt", "r") as keywords:
             lines = keywords.readlines()
             for line in lines:
                 splits = line.split("\t")

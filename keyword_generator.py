@@ -3,7 +3,7 @@ import rdflib
 class Keywords:
     def __init__(self):
         self.g = rdflib.Graph()
-        self.g.load("three_kingdoms.rdf", format="turtle")
+        self.g.load("data/three_kingdoms.rdf", format="turtle")
         self.place_list = []
         self.loyalty_list = []
         self.event_list = []
@@ -13,7 +13,7 @@ class Keywords:
 
     def write_to_file(self):
         write_string = '\n'.join(self.words)
-        keywords_file = open('keywords.txt', 'w')
+        keywords_file = open('data/keywords.txt', 'w')
         keywords_file.write(write_string)
         keywords_file.close()
 
@@ -50,7 +50,7 @@ class Keywords:
         qres = self.g.query(
             """SELECT DISTINCT ?loyalty
             WHERE {
-                ?person foaf:loyal_to ?loyalty .
+                ?person foaf:loyalty ?loyalty .
             }""")
 
         for row in qres:

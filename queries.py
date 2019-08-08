@@ -4,7 +4,7 @@ import rdflib
 class Queries:
   def __init__(self):
     self.g = rdflib.Graph()
-    self.g.load("three_kingdoms.rdf", format="turtle")
+    self.g.load("data/three_kingdoms.rdf", format="turtle")
 
   def birthplace(self, subj, place):
     qres = self.g.query(
@@ -40,7 +40,7 @@ class Queries:
     qres = self.g.query(
        """SELECT DISTINCT ?charname ?leadername
           WHERE {
-             ?person foaf:loyal_to ?leadername .
+             ?person foaf:loyalty ?leadername .
              ?person foaf:name ?charname .
           }""")
 

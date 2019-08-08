@@ -97,7 +97,7 @@ class KnowledgeGraph:
       self.store.add((subj, FOAF.time, time))
 
   def serialize_store(self):
-    self.store.serialize("three_kingdoms.rdf", format="turtle", max_depth=3)
+    self.store.serialize("data/three_kingdoms.rdf", format="turtle", max_depth=3)
 
 
 if __name__ == '__main__':
