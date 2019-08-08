@@ -7,6 +7,7 @@ class Keywords:
         self.place_list = []
         self.event_list = []
         self.chapter_list = []
+        self.time_list = []
         self.words = []
 
     def write_to_file(self):
@@ -43,6 +44,14 @@ class Keywords:
             if m_bplace not in self.place_list:
                 self.words.append(m_bplace + "\tPLACE")
                 self.place_list.append(m_bplace)
+
+    def gender(self):
+        self.words.append("男\tGENDER")
+        self.words.append("女\tGENDER")
+
+    def fictional(self):
+        self.words.append("史实人物\tFICTIONAL")
+        self.words.append("虚构人物\tFICTIONAL")
 
     def events(self):
         qres = self.g.query(
@@ -87,12 +96,31 @@ class Keywords:
                 self.words.append(location + "\tPLACE")
                 self.place_list.append(location)
 
+    def event_time(self):
+        qres = self.g.query(
+            """SELECT DISTINCT ?time
+            WHERE {
+                ?event foaf:time ?time
+            }""")
+
+        for row in qres:
+            time = row[0]
+
+            if time not in self.time_list:
+                self.words.append(time + "\tTIME")
+                self.time_list.append(time)
+
+
+
 
 if __name__ == '__main__':
     keywords = Keywords()
     keywords.character_names()
     keywords.birthplace_names()
+    keywords.gender()
+    keywords.fictional()
     keywords.events()
     keywords.chapters()
     keywords.event_locations()
+    keywords.event_time()
     keywords.write_to_file()
