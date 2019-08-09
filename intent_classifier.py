@@ -80,12 +80,6 @@ def padd_labels(labels, label_num):
         label_array[i, int(labels[i])-1] = 1
     return label_array
 
-# def padd_labels(labels):
-#     label_array = np.zeros([len(labels), 1], dtype='int')
-#     for i in range(len(labels)):
-#         label_array[i, 0] = int(labels[i])
-#     return label_array
-
 
 if __name__ == '__main__':
     filename = 'data/training.txt'
@@ -108,13 +102,9 @@ if __name__ == '__main__':
     y_dev = padd_labels(y_dev, highest_label)
     y_test = padd_labels(y_test, highest_label)
 
-    # y_train = padd_labels(y_train)
-    # y_dev = padd_labels(y_dev)
-    # y_test = padd_labels(y_test)
-
     model = deep_models.build_convolutional_network(max_sentence, len(voc_dict), highest_label)
 
-    model.fit(x_train, y_train, epochs=1)
+    model.fit(x_train, y_train, epochs=2)
 
     dev_loss, dev_acc = model.evaluate(x_dev, y_dev)
     print('Test accuracy:', dev_acc)

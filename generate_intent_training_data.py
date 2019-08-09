@@ -1,5 +1,6 @@
 import random
 
+
 class GenerateIntentTrainingData:
     def __init__(self):
         self.keyword_lists = {}
@@ -50,6 +51,7 @@ class GenerateIntentTrainingData:
         training_data = open('data/training.txt', 'w')
         training_data.write(write_string)
         training_data.close()
+
 
 if __name__ == '__main__':
     gen = GenerateIntentTrainingData()
