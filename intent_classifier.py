@@ -1,7 +1,9 @@
 import random
 import numpy as np
+import pickle as _pickle
 import jieba.posseg as pseg
 import deep_learning_models.convolutional_network as deep_models
+
 
 def load_data(filename):
     text_file = open(filename)
@@ -44,6 +46,7 @@ def generate_vocabulary(data):
             if word not in vocabulary_dict.keys():
                 vocabulary_dict[word] = index
                 index += 1
+    _pickle.dump(vocabulary_dict, open("data/vocab.p", "wb"))
     return vocabulary_dict
 
 
@@ -119,6 +122,12 @@ if __name__ == '__main__':
 
     print(predictions[:10])
     print(y_test[:10])
+
+    model_json = model.to_json()
+    with open("pretrained_models/model.json", "w") as json_file:
+        json_file.write(model_json)
+    model.save_weights("pretrained_models/model.h5")
+    print("Saved model to disk")
 
 
 
