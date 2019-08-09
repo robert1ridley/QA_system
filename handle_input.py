@@ -5,6 +5,10 @@ import jieba.posseg as pseg
 from deep_learning_models.convolutional_network import Conv1DWithMasking, MeanPool
 from utils.utils import get_question_type
 from query_templates import get_template
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 
 class HandleInput:
@@ -33,7 +37,7 @@ class HandleInput:
         print("输入你关于三国演义的问题：")
         question = input()
         self.question = [question]
-        print("Currently searching for answer to your question. Your patience is appreciated.")
+        print("正在搜索答案。")
 
     def segment_data(self):
         self.all_indices = []
