@@ -6,6 +6,7 @@ from deep_learning_models.convolutional_network import Conv1DWithMasking, MeanPo
 from utils.utils import get_question_type
 from query_templates import get_template
 
+
 class HandleInput:
     def __init__(self):
         self.keywords_dict = {}
