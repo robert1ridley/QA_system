@@ -4,9 +4,12 @@ CHARACTER在安徽徐州市沛县出生吗？    1
 谁在PLACE出生？    1
 CHARACTER出生于哪个城市？    1
 CHARACTER出生于哪个地方？    1
-谁效忠势力LOYALTY？ 2
-CHARACTER效忠势力谁？  2
-CHARACTER效忠势力LOYALTY吗？ 2
+CHARACTER的谁效忠势力是什么？ 2
+CHARACTER有什么效忠势力？   2
+谁效忠LOYALTY？ 2
+CHARACTER效忠谁？  2
+CHARACTER效忠LOYALTY吗？ 2
+谁有CHARACTER的支持？ 2
 CHARACTER什么时候出生？ 3
 CHARACTER198年出生吗？  3  
 CHARACTER哪年出生？   3
@@ -37,7 +40,7 @@ EVENT是什么？ 7
 在EVENT发生了哪些事？ 7
 EVENT有什么历史？   8
 EVENT的背景是什么？  8
-告诉我EVENT的历史。
+告诉我EVENT的历史。    8
 到底EVENT发生了什么？ 8
 EVENT在哪里发生？   9
 EVENT在PLACE发生吗？ 9
