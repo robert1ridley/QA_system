@@ -6,6 +6,9 @@ class Queries:
     self.g = rdflib.Graph()
     self.g.load("data/three_kingdoms.rdf", format="turtle")
 
+  def no_res(self):
+    return print("对不起，搜索没有结果。")
+
   def birthplace(self, subj, place):
     qres = self.g.query(
       """SELECT DISTINCT ?name ?ancient_birthplace ?modern_birthplace
@@ -34,7 +37,7 @@ class Queries:
         if str(ancient_birthplace) == place or str(modern_birthplace) == place:
           print("{} was born in {}, modern-day {}.".format(name, ancient_birthplace, modern_birthplace))
       else:
-        raise NotImplementedError
+        return self.no_res()
 
   def loyalty(self, subj, pred):
     qres = self.g.query(
@@ -58,9 +61,12 @@ class Queries:
       ########################
       # Who person A loyal to?
       ########################
-      else:
+      elif subj:
         if str(subject) == subj:
           print("{} is loyal to {}.".format(subject, predicate))
+
+      else:
+        return self.no_res()
 
   def lifespan(self, subj):
     qres = self.g.query(
@@ -75,6 +81,8 @@ class Queries:
       lifespan = row[1]
       if str(name) == subj:
         print("{} lived was alive the following years: {}.".format(name, lifespan))
+      else:
+        return self.no_res()
 
   def gender(self, subj, gender):
     qres = self.g.query(
@@ -103,7 +111,7 @@ class Queries:
           print("{} was {}.".format(name, gen))
 
       else:
-        raise NotImplementedError
+          return self.no_res()
 
   def about_character(self, subj):
     qres = self.g.query(
@@ -121,7 +129,7 @@ class Queries:
         if str(name) == subj:
           print("Some info about {}: {}".format(subj, intro))
       else:
-        raise NotImplementedError
+        return self.no_res()
 
   def fictional(self, subj, fictional):
     qres = self.g.query(
@@ -142,6 +150,8 @@ class Queries:
       elif fictional:
         if str(fict) == fictional:
           print("{} was {}.".format(name, fict))
+      else:
+        return self.no_res()
 
   def which_chapter(self, subj, chapt):
     qres = self.g.query(
@@ -163,6 +173,9 @@ class Queries:
         if str(chapter) == chapt:
           print("{} is in {}.".format(event_name, chapter))
 
+      else:
+        return self.no_res()
+
   def event_info(self, subj):
     qres = self.g.query(
       """SELECT DISTINCT ?eventname ?info
@@ -180,7 +193,7 @@ class Queries:
           print("Some info about {}: {}".format(event_name, description))
 
       else:
-        raise NotImplementedError
+        return self.no_res()
 
   def event_history(self, subj):
     qres = self.g.query(
@@ -199,7 +212,7 @@ class Queries:
           print("Some history about {}: {}".format(event_name, history))
 
       else:
-        raise NotImplementedError
+        return self.no_res()
 
   def event_location(self, subj, loc):
     qres = self.g.query(
@@ -220,7 +233,7 @@ class Queries:
         if str(location) == loc:
           print("{} occurred at {}".format(event_name, location))
       else:
-        raise NotImplementedError
+        return self.no_res()
 
   def event_time(self, subj, year):
     qres = self.g.query(
@@ -241,7 +254,7 @@ class Queries:
         if str(time) == year:
           print("{} occurred in {}.".format(event_name, time))
       else:
-        raise NotImplementedError
+        return self.no_res()
 
   def event_involved(self, subj, char):
     qres = self.g.query(
@@ -265,8 +278,6 @@ class Queries:
       elif char:
         if str(involved) == char:
           events_involved_in.append(event)
-      else:
-        raise NotImplementedError
 
     people_involved_string = ', '.join(people_involved)
     events_involved_in_string = ', '.join(events_involved_in)
@@ -274,6 +285,8 @@ class Queries:
       print("{} involved {} people: {}".format(event, len(people_involved), people_involved_string))
     elif len(events_involved_in) > 0:
       print("{} involved in {} events: {}".format(char, len(events_involved_in), events_involved_in_string))
+    else:
+      return self.no_res()
 
 if __name__ == '__main__':
     templates = Queries()
