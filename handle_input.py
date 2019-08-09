@@ -34,6 +34,7 @@ class HandleInput:
         print('Keras model load completed')
 
     def ask_for_user_input(self):
+        self.matched_keywords = {}
         print("输入你关于三国演义的问题：")
         question = input()
         self.question = [question]
