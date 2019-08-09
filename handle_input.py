@@ -3,9 +3,20 @@ import numpy as np
 from keras.models import model_from_json
 import jieba.posseg as pseg
 from deep_learning_models.convolutional_network import Conv1DWithMasking, MeanPool
+from utils.utils import get_question_type
+from query_templates import get_template
 
 class HandleInput:
     def __init__(self):
+        self.keywords_dict = {}
+        self.matched_keywords = {}
+        with open("data/keywords.txt", "r") as keywords:
+            lines = keywords.readlines()
+            for line in lines:
+                splits = line.split("\t")
+                word = splits[0].strip()
+                word_type = splits[1].strip()
+                self.keywords_dict[word] = word_type
         self.vocab_dictionary = _pickle.load(open("data/vocab.p", "rb"))
         json_file = open('pretrained_models/model.json', 'r')
         loaded_model_json = json_file.read()
@@ -21,6 +32,7 @@ class HandleInput:
         print("输入你关于三国演义的问题：")
         question = input()
         self.question = [question]
+        print("Currently searching for answer to your question. Your patience is appreciated.")
 
     def segment_data(self):
         self.all_indices = []
@@ -52,14 +64,25 @@ class HandleInput:
                 predictions[0, j] = 0
         self.prediction = predictions[0]
 
+    def find_keywords_in_text(self):
+        for word in self.keywords_dict.keys():
+            if word in self.question[0]:
+                self.matched_keywords[self.keywords_dict[word]] = word
+
 
 if __name__ == '__main__':
     handle_input = HandleInput()
     embed_shape = handle_input.model.layers[0].output.get_shape()
     sent_length = embed_shape[1]
-    handle_input.ask_for_user_input()
-    handle_input.segment_data()
-    handle_input.padd_sentences(sent_length)
-    handle_input.make_prediction()
-    print(handle_input.prediction)
+    while True:
+        handle_input.ask_for_user_input()
+        handle_input.segment_data()
+        handle_input.padd_sentences(sent_length)
+        handle_input.make_prediction()
+        question_type = get_question_type(handle_input.prediction)
+        handle_input.find_keywords_in_text()
+        get_template(question_type, handle_input.matched_keywords)
+
+
+
 
